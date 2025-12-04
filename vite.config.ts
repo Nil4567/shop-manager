@@ -6,9 +6,11 @@ export default defineConfig({
   plugins: [react()],
   base: './', 
   define: {
-    // This polyfill allows code using process.env to work in the browser
-    'process.env': {},
-    // Some older libraries might look for global
+    // This correctly maps the API_KEY from the system to the browser code
+    'process.env': {
+      API_KEY: process.env.API_KEY
+    },
+    // Polyfill global for compatibility
     'global': 'window',
   },
   build: {
