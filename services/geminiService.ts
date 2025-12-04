@@ -2,9 +2,10 @@ import { GoogleGenAI } from "@google/genai";
 import { Job, JobStage } from "../types";
 
 const getAIClient = () => {
-  const apiKey = process.env.API_KEY;
+  // Safety check: process.env might be empty in browser if not configured in Vite
+  const apiKey = process.env?.API_KEY;
   if (!apiKey) {
-    console.warn("API_KEY not found in environment variables");
+    console.warn("API_KEY not found. AI features will be disabled.");
     return null;
   }
   return new GoogleGenAI({ apiKey });
@@ -12,7 +13,7 @@ const getAIClient = () => {
 
 export const generateShopReport = async (jobs: Job[]): Promise<string> => {
   const ai = getAIClient();
-  if (!ai) return "API Key is missing. Please configure the environment.";
+  if (!ai) return "AI Configuration Missing. Please set up the API Key in your environment to use this feature.";
 
   // Filter for active jobs to reduce token count and focus context
   const activeJobs = jobs.filter(j => j.currentStage !== JobStage.COMPLETED);
