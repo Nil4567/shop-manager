@@ -2,8 +2,8 @@ import { GoogleGenAI } from "@google/genai";
 import { Job, JobStage } from "../types";
 
 const getAIClient = () => {
-  // Safety check: process.env might be empty in browser if not configured in Vite
-  const apiKey = process.env?.API_KEY;
+  // Use direct access as defined in vite.config.ts
+  const apiKey = process.env.API_KEY;
   if (!apiKey) {
     console.warn("API_KEY not found. AI features will be disabled.");
     return null;
