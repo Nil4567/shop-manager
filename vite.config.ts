@@ -6,8 +6,10 @@ export default defineConfig({
   plugins: [react()],
   base: './', 
   define: {
-    // Prevents crash when accessing process.env.API_KEY in browser
+    // This polyfill allows code using process.env to work in the browser
     'process.env': {},
+    // Some older libraries might look for global
+    'global': 'window',
   },
   build: {
     outDir: 'dist',
